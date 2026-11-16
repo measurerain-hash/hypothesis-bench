@@ -144,12 +144,23 @@
         return out;
     }
 
-    function reset() {
-        if (!spec) return;
-        values = defaults();
+    function repaintControls() {
         controls.innerHTML = "";
         for (const v of spec.variables) controls.appendChild(slider(v));
         render();
+    }
+
+    function reset() {
+        if (!spec) return;
+        values = defaults();
+        repaintControls();
+    }
+
+    function realValues() {
+        if (!spec) return;
+        for (const v of spec.variables) values[v.symbol] = v.real;
+        repaintControls();
+        setStatus("Set to the value a real system of this kind has.");
     }
 
     async function run() {
@@ -195,6 +206,7 @@
         if (e.key === "Enter") run();
     });
     el("reset").addEventListener("click", reset);
+    el("real").addEventListener("click", realValues);
     window.addEventListener("resize", () => {
         if (built) render();
     });

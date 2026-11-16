@@ -275,6 +275,13 @@ canvas {
     accent-color: var(--accent);
 }
 
+.btnrow {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+}
+
 .axis {
     display: flex;
     justify-content: space-between;

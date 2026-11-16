@@ -41,7 +41,8 @@
             "Rules:",
             "- variables[0] is swept along the x-axis; the rest are sliders held at their default.",
             "- `formula` must be finite across the whole slider range; guard the domain (log, sqrt, division).",
-            "- Use SI units. Set `real` to the value a real system of this kind has.",
+            "- Check the formula dimensionally before answering, and check that at every `real` input the result matches a textbook value for this kind of system. If it does not, fix the formula rather than the number.",
+            "- Use SI units throughout. Set `real` to the value a real system of this kind has.",
             "- Keep every string short. Plain language, no hype, no emoji.",
         ].join("\n");
     }

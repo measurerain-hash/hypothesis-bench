@@ -8,6 +8,7 @@
             name="description"
             content="Type a science topic. A Pollinations model builds a small interactive model of it — real variables, a plot you sweep, and a plain-language briefing you can test against."
         />
+        <link rel="icon" href="data:," />
         <link rel="stylesheet" href="styles.css" />
         <script src="https://cdn.jsdelivr.net/npm/@pollinations/ui@0.1.0-alpha.20/dist/connect.js"></script>
     </head>
@@ -67,7 +68,12 @@
                         <span id="x-label"></span>
                         <span id="y-label"></span>
                     </div>
-                    <button id="reset" type="button" class="ghost">Reset to defaults</button>
+                    <div class="btnrow">
+                        <button id="real" type="button" class="ghost">
+                            Use real-world values
+                        </button>
+                        <button id="reset" type="button" class="ghost">Reset to defaults</button>
+                    </div>
                 </div>
             </section>
         </main>
