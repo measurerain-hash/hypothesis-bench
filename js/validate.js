@@ -52,8 +52,12 @@
     function compileFormula(expr, symbols) {
         const e = str(expr, "");
         if (!e || BANNED.test(e)) return null;
-        // Only Math.* may use a dot; every other dot is rejected.
-        if (e.replace(/Math\./g, "").includes(".")) return null;
+        // A dot is allowed only for Math.* and inside a decimal literal (0.5,
+        // .5, 1.). Every other dot is member access (x.constructor, a.at) and
+        // is rejected — the first version rejected decimal literals too, which
+        // turned "0.5 * k * x" into a silent y = x.
+        const noMath = e.replace(/Math\./g, "");
+        if (noMath.replace(/\d+\.\d*|\.\d+/g, "0").includes(".")) return null;
         if (!/^[A-Za-z0-9_+\-*/%(),.\s]+$/.test(e)) return null;
         try {
             const fn = new Function(...symbols, "Math", "return (" + e + ");");
@@ -116,7 +120,11 @@
         let formula = str(raw.formula, "");
         const symbols = vars.map((v) => v.symbol);
         let fn = compileFormula(formula, symbols);
+        let formulaRejected = false;
         if (!fn) {
+            // Keep the bench usable, but say so: a silent swap for the first
+            // variable looked like the model's answer when it was not.
+            formulaRejected = true;
             formula = symbols[0];
             fn = compileFormula(formula, symbols);
         }
@@ -137,6 +145,7 @@
             facts: strList(raw.facts, 6),
             sources: strList(raw.sources, 6),
             _eval: fn,
+            _formulaRejected: formulaRejected,
         };
     }
 

@@ -191,8 +191,10 @@
             setStatus(
                 spec._fallback
                     ? "The model reply could not be parsed — showing a placeholder bench. Try again."
-                    : "Ready. Drag the sliders.",
-                spec._fallback,
+                    : spec._formulaRejected
+                      ? "The model's formula could not be evaluated, so only its first variable is plotted. Treat the shape as a placeholder."
+                      : "Ready. Drag the sliders.",
+                spec._fallback || spec._formulaRejected,
             );
         } catch (err) {
             setStatus(String(err.message || err), true);
